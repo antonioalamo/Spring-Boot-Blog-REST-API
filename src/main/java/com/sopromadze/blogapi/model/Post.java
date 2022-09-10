@@ -69,6 +69,15 @@ public class Post extends UserDateAudit {
 		this.user = user;
 	}
 
+	@JsonIgnore
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	public List<Comment> getComments() {
 		return comments == null ? null : new ArrayList<>(comments);
 	}
