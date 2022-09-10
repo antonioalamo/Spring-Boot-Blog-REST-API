@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:mysql://blogapi-db:3306/blogapi?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root
-    password: r00tpa55
+    username: user1
+    password: mypa55
   jpa:
     hibernate:
       ddl-auto: none
