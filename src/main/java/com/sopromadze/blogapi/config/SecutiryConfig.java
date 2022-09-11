@@ -58,7 +58,7 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 				// .antMatchers(HttpMethod.GET, "/api/**").authenticated()
 				.antMatchers(HttpMethod.POST, "/api/**").authenticated()
 				.antMatchers(HttpMethod.PUT, "/api/**").authenticated()
-				.antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+				.antMatchers(HttpMethod.DELETE, "/api/**").authenticated()	
 				;
 
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -79,4 +79,5 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 }
