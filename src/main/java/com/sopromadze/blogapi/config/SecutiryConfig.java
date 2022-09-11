@@ -52,13 +52,16 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/api/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/swagger-ui/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/swagger-ui").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability").permitAll();
-				// .anyRequest().authenticated();
+				.antMatchers(HttpMethod.GET, "/api/users/checkUsernameAvailability", "/api/users/checkEmailAvailability").permitAll()
+				// .anyRequest().authenticated()
+				// .antMatchers(HttpMethod.GET, "/api/**").authenticated()
+				.antMatchers(HttpMethod.POST, "/api/**").authenticated()
+				.antMatchers(HttpMethod.PUT, "/api/**").authenticated()
+				.antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
+				;
 
-		// http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 	}
 
