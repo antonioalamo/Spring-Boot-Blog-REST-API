@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.controller;
 
 import com.sopromadze.blogapi.model.Todo;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.security.CurrentUser;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -69,8 +69,8 @@ public class TodoController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER')")
-	public ResponseEntity<ApiResponse> deleteTodo(@PathVariable(value = "id") Long id, @CurrentUser UserPrincipal currentUser) {
-		ApiResponse apiResponse = todoService.deleteTodo(id, currentUser);
+	public ResponseEntity<BlogApiResponse> deleteTodo(@PathVariable(value = "id") Long id, @CurrentUser UserPrincipal currentUser) {
+		BlogApiResponse apiResponse = todoService.deleteTodo(id, currentUser);
 
 		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
 	}

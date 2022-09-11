@@ -3,7 +3,7 @@ package com.sopromadze.blogapi.controller;
 import com.sopromadze.blogapi.exception.ResponseEntityErrorException;
 import com.sopromadze.blogapi.model.Album;
 import com.sopromadze.blogapi.payload.AlbumResponse;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PhotoResponse;
 import com.sopromadze.blogapi.payload.request.AlbumRequest;
@@ -40,7 +40,7 @@ public class AlbumController {
 	private PhotoService photoService;
 
 	@ExceptionHandler(ResponseEntityErrorException.class)
-	public ResponseEntity<ApiResponse> handleExceptions(ResponseEntityErrorException exception) {
+	public ResponseEntity<BlogApiResponse> handleExceptions(ResponseEntityErrorException exception) {
 		return exception.getApiResponse();
 	}
 
@@ -73,7 +73,7 @@ public class AlbumController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteAlbum(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
+	public ResponseEntity<BlogApiResponse> deleteAlbum(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
 		return albumService.deleteAlbum(id, currentUser);
 	}
 

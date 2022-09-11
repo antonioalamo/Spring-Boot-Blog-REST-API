@@ -8,7 +8,7 @@ import com.sopromadze.blogapi.model.Post;
 import com.sopromadze.blogapi.model.Tag;
 import com.sopromadze.blogapi.model.role.RoleName;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PostRequest;
 import com.sopromadze.blogapi.payload.PostResponse;
@@ -123,21 +123,21 @@ public class PostServiceImpl implements PostService {
 			post.setCategory(category);
 			return postRepository.save(post);
 		}
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to edit this post");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to edit this post");
 
 		throw new UnauthorizedException(apiResponse);
 	}
 
 	@Override
-	public ApiResponse deletePost(Long id, UserPrincipal currentUser) {
+	public BlogApiResponse deletePost(Long id, UserPrincipal currentUser) {
 		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(POST, ID, id));
 		if (post.getUser().getId().equals(currentUser.getId())
 				|| currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			postRepository.deleteById(id);
-			return new ApiResponse(Boolean.TRUE, "You successfully deleted post");
+			return new BlogApiResponse(Boolean.TRUE, "You successfully deleted post");
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete this post");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to delete this post");
 
 		throw new UnauthorizedException(apiResponse);
 	}

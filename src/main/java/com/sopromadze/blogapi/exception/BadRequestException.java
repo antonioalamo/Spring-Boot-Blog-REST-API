@@ -1,6 +1,6 @@
 package com.sopromadze.blogapi.exception;
 
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class BadRequestException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	private ApiResponse apiResponse;
+	private BlogApiResponse apiResponse;
 
-	public BadRequestException(ApiResponse apiResponse) {
+	public BadRequestException(BlogApiResponse apiResponse) {
 		super();
 		this.apiResponse = apiResponse;
 	}
@@ -23,7 +23,7 @@ public class BadRequestException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public ApiResponse getApiResponse() {
+	public BlogApiResponse getApiResponse() {
 		return apiResponse;
 	}
 }

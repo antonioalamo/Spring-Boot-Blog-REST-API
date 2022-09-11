@@ -5,7 +5,7 @@ import com.sopromadze.blogapi.exception.ResourceNotFoundException;
 import com.sopromadze.blogapi.exception.UnauthorizedException;
 import com.sopromadze.blogapi.model.Todo;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.repository.TodoRepository;
 import com.sopromadze.blogapi.repository.UserRepository;
@@ -47,7 +47,7 @@ public class TodoServiceImpl implements TodoService {
 			return todoRepository.save(todo);
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
 
 		throw new UnauthorizedException(apiResponse);
 	}
@@ -61,7 +61,7 @@ public class TodoServiceImpl implements TodoService {
 			return todoRepository.save(todo);
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
 
 		throw new UnauthorizedException(apiResponse);
 	}
@@ -95,7 +95,7 @@ public class TodoServiceImpl implements TodoService {
 			return todo;
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
 
 		throw new UnauthorizedException(apiResponse);
 	}
@@ -110,22 +110,22 @@ public class TodoServiceImpl implements TodoService {
 			return todoRepository.save(todo);
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
 
 		throw new UnauthorizedException(apiResponse);
 	}
 
 	@Override
-	public ApiResponse deleteTodo(Long id, UserPrincipal currentUser) {
+	public BlogApiResponse deleteTodo(Long id, UserPrincipal currentUser) {
 		User user = userRepository.getUser(currentUser);
 		Todo todo = todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(TODO, ID, id));
 
 		if (todo.getUser().getId().equals(user.getId())) {
 			todoRepository.deleteById(id);
-			return new ApiResponse(Boolean.TRUE, "You successfully deleted todo");
+			return new BlogApiResponse(Boolean.TRUE, "You successfully deleted todo");
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);
 
 		throw new UnauthorizedException(apiResponse);
 	}

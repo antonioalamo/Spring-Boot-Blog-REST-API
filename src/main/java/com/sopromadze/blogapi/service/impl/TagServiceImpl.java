@@ -4,7 +4,7 @@ import com.sopromadze.blogapi.exception.ResourceNotFoundException;
 import com.sopromadze.blogapi.exception.UnauthorizedException;
 import com.sopromadze.blogapi.model.Tag;
 import com.sopromadze.blogapi.model.role.RoleName;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.repository.TagRepository;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -58,21 +58,21 @@ public class TagServiceImpl implements TagService {
 			tag.setName(newTag.getName());
 			return tagRepository.save(tag);
 		}
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to edit this tag");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to edit this tag");
 
 		throw new UnauthorizedException(apiResponse);
 	}
 
 	@Override
-	public ApiResponse deleteTag(Long id, UserPrincipal currentUser) {
+	public BlogApiResponse deleteTag(Long id, UserPrincipal currentUser) {
 		Tag tag = tagRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tag", "id", id));
 		if (tag.getCreatedBy().equals(currentUser.getId()) || currentUser.getAuthorities()
 				.contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			tagRepository.deleteById(id);
-			return new ApiResponse(Boolean.TRUE, "You successfully deleted tag");
+			return new BlogApiResponse(Boolean.TRUE, "You successfully deleted tag");
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete this tag");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to delete this tag");
 
 		throw new UnauthorizedException(apiResponse);
 	}

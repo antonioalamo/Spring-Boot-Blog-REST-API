@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.service;
 
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.InfoRequest;
 import com.sopromadze.blogapi.payload.UserIdentityAvailability;
 import com.sopromadze.blogapi.payload.UserProfile;
@@ -22,11 +22,11 @@ public interface UserService {
 
 	User updateUser(User newUser, String username, UserPrincipal currentUser);
 
-	ApiResponse deleteUser(String username, UserPrincipal currentUser);
+	BlogApiResponse deleteUser(String username, UserPrincipal currentUser);
 
-	ApiResponse giveAdmin(String username);
+	BlogApiResponse giveAdmin(String username);
 
-	ApiResponse removeAdmin(String username);
+	BlogApiResponse removeAdmin(String username);
 
 	UserProfile setOrUpdateInfo(UserPrincipal currentUser, InfoRequest infoRequest);
 

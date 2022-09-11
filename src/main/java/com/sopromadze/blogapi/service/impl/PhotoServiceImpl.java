@@ -5,7 +5,7 @@ import com.sopromadze.blogapi.exception.UnauthorizedException;
 import com.sopromadze.blogapi.model.Album;
 import com.sopromadze.blogapi.model.Photo;
 import com.sopromadze.blogapi.model.role.RoleName;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PhotoRequest;
 import com.sopromadze.blogapi.payload.PhotoResponse;
@@ -86,7 +86,7 @@ public class PhotoServiceImpl implements PhotoService {
 					updatedPhoto.getUrl(), updatedPhoto.getThumbnailUrl(), updatedPhoto.getAlbum().getId());
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to update this photo");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to update this photo");
 
 		throw new UnauthorizedException(apiResponse);
 	}
@@ -103,21 +103,21 @@ public class PhotoServiceImpl implements PhotoService {
 					newPhoto.getThumbnailUrl(), newPhoto.getAlbum().getId());
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to add photo in this album");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to add photo in this album");
 
 		throw new UnauthorizedException(apiResponse);
 	}
 
 	@Override
-	public ApiResponse deletePhoto(Long id, UserPrincipal currentUser) {
+	public BlogApiResponse deletePhoto(Long id, UserPrincipal currentUser) {
 		Photo photo = photoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(PHOTO, ID, id));
 		if (photo.getAlbum().getUser().getId().equals(currentUser.getId())
 				|| currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			photoRepository.deleteById(id);
-			return new ApiResponse(Boolean.TRUE, "Photo deleted successfully");
+			return new BlogApiResponse(Boolean.TRUE, "Photo deleted successfully");
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete this photo");
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to delete this photo");
 
 		throw new UnauthorizedException(apiResponse);
 	}

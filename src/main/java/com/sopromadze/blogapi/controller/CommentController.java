@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.controller;
 
 import com.sopromadze.blogapi.model.Comment;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.CommentRequest;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.security.CurrentUser;
@@ -70,10 +70,10 @@ public class CommentController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteComment(@PathVariable(name = "postId") Long postId,
+	public ResponseEntity<BlogApiResponse> deleteComment(@PathVariable(name = "postId") Long postId,
 			@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
 
-		ApiResponse response = commentService.deleteComment(postId, id, currentUser);
+		BlogApiResponse response = commentService.deleteComment(postId, id, currentUser);
 
 		HttpStatus status = response.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
 

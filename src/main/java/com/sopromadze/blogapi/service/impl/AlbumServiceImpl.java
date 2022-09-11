@@ -6,7 +6,7 @@ import com.sopromadze.blogapi.model.Album;
 import com.sopromadze.blogapi.model.role.RoleName;
 import com.sopromadze.blogapi.model.user.User;
 import com.sopromadze.blogapi.payload.AlbumResponse;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.request.AlbumRequest;
 import com.sopromadze.blogapi.repository.AlbumRepository;
@@ -106,13 +106,13 @@ public class AlbumServiceImpl implements AlbumService {
 	}
 
 	@Override
-	public ResponseEntity<ApiResponse> deleteAlbum(Long id, UserPrincipal currentUser) {
+	public ResponseEntity<BlogApiResponse> deleteAlbum(Long id, UserPrincipal currentUser) {
 		Album album = albumRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ALBUM_STR, ID, id));
 		User user = userRepository.getUser(currentUser);
 		if (album.getUser().getId().equals(user.getId()) || currentUser.getAuthorities()
 				.contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			albumRepository.deleteById(id);
-			return new ResponseEntity<>(new ApiResponse(Boolean.TRUE, "You successfully deleted album"), HttpStatus.OK);
+			return new ResponseEntity<>(new BlogApiResponse(Boolean.TRUE, "You successfully deleted album"), HttpStatus.OK);
 		}
 
 		throw new BlogapiException(HttpStatus.UNAUTHORIZED, YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION);

@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.controller;
 
 import com.sopromadze.blogapi.model.Post;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PostRequest;
 import com.sopromadze.blogapi.payload.PostResponse;
@@ -87,8 +87,8 @@ public class PostController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deletePost(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
-		ApiResponse apiResponse = postService.deletePost(id, currentUser);
+	public ResponseEntity<BlogApiResponse> deletePost(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
+		BlogApiResponse apiResponse = postService.deletePost(id, currentUser);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}

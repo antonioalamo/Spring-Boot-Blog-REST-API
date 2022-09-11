@@ -6,7 +6,7 @@ import com.sopromadze.blogapi.model.Comment;
 import com.sopromadze.blogapi.model.Post;
 import com.sopromadze.blogapi.model.role.RoleName;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.CommentRequest;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.repository.CommentRepository;
@@ -106,20 +106,20 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public ApiResponse deleteComment(Long postId, Long id, UserPrincipal currentUser) {
+	public BlogApiResponse deleteComment(Long postId, Long id, UserPrincipal currentUser) {
 		Post post = postRepository.findById(postId)
 				.orElseThrow(() -> new ResourceNotFoundException(POST_STR, ID_STR, postId));
 		Comment comment = commentRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException(COMMENT_STR, ID_STR, id));
 
 		if (!comment.getPost().getId().equals(post.getId())) {
-			return new ApiResponse(Boolean.FALSE, COMMENT_DOES_NOT_BELONG_TO_POST);
+			return new BlogApiResponse(Boolean.FALSE, COMMENT_DOES_NOT_BELONG_TO_POST);
 		}
 
 		if (comment.getUser().getId().equals(currentUser.getId())
 				|| currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			commentRepository.deleteById(comment.getId());
-			return new ApiResponse(Boolean.TRUE, "You successfully deleted comment");
+			return new BlogApiResponse(Boolean.TRUE, "You successfully deleted comment");
 		}
 
 		throw new BlogapiException(HttpStatus.UNAUTHORIZED, YOU_DON_T_HAVE_PERMISSION_TO + "delete" + THIS_COMMENT);

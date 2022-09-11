@@ -11,7 +11,7 @@ import com.sopromadze.blogapi.model.user.Address;
 import com.sopromadze.blogapi.model.user.Company;
 import com.sopromadze.blogapi.model.user.Geo;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.InfoRequest;
 import com.sopromadze.blogapi.payload.UserIdentityAvailability;
 import com.sopromadze.blogapi.payload.UserProfile;
@@ -76,12 +76,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User addUser(User user) {
 		if (userRepository.existsByUsername(user.getUsername())) {
-			ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
+			BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "Username is already taken");
 			throw new BadRequestException(apiResponse);
 		}
 
 		if (userRepository.existsByEmail(user.getEmail())) {
-			ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Email is already taken");
+			BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "Email is already taken");
 			throw new BadRequestException(apiResponse);
 		}
 
@@ -111,28 +111,28 @@ public class UserServiceImpl implements UserService {
 
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to update profile of: " + username);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to update profile of: " + username);
 		throw new UnauthorizedException(apiResponse);
 
 	}
 
 	@Override
-	public ApiResponse deleteUser(String username, UserPrincipal currentUser) {
+	public BlogApiResponse deleteUser(String username, UserPrincipal currentUser) {
 		User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "id", username));
 		if (!user.getId().equals(currentUser.getId()) || !currentUser.getAuthorities()
 				.contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
-			ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete profile of: " + username);
+			BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to delete profile of: " + username);
 			throw new AccessDeniedException(apiResponse);
 		}
 
 		userRepository.deleteById(user.getId());
 
-		return new ApiResponse(Boolean.TRUE, "You successfully deleted profile of: " + username);
+		return new BlogApiResponse(Boolean.TRUE, "You successfully deleted profile of: " + username);
 	}
 
 	@Override
-	public ApiResponse giveAdmin(String username) {
+	public BlogApiResponse giveAdmin(String username) {
 		User user = userRepository.getUserByName(username);
 		List<Role> roles = new ArrayList<>();
 		roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN)
@@ -141,18 +141,18 @@ public class UserServiceImpl implements UserService {
 				roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
 		user.setRoles(roles);
 		userRepository.save(user);
-		return new ApiResponse(Boolean.TRUE, "You gave ADMIN role to user: " + username);
+		return new BlogApiResponse(Boolean.TRUE, "You gave ADMIN role to user: " + username);
 	}
 
 	@Override
-	public ApiResponse removeAdmin(String username) {
+	public BlogApiResponse removeAdmin(String username) {
 		User user = userRepository.getUserByName(username);
 		List<Role> roles = new ArrayList<>();
 		roles.add(
 				roleRepository.findByName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
 		user.setRoles(roles);
 		userRepository.save(user);
-		return new ApiResponse(Boolean.TRUE, "You took ADMIN role from user: " + username);
+		return new BlogApiResponse(Boolean.TRUE, "You took ADMIN role from user: " + username);
 	}
 
 	@Override
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
 					updatedUser.getCompany(), postCount);
 		}
 
-		ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to update users profile", HttpStatus.FORBIDDEN);
+		BlogApiResponse apiResponse = new BlogApiResponse(Boolean.FALSE, "You don't have permission to update users profile", HttpStatus.FORBIDDEN);
 		throw new AccessDeniedException(apiResponse);
 	}
 }

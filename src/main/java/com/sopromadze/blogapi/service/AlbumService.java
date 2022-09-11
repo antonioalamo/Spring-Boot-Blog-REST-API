@@ -2,7 +2,7 @@ package com.sopromadze.blogapi.service;
 
 import com.sopromadze.blogapi.model.Album;
 import com.sopromadze.blogapi.payload.AlbumResponse;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.request.AlbumRequest;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -18,7 +18,7 @@ public interface AlbumService {
 
 	ResponseEntity<AlbumResponse> updateAlbum(Long id, AlbumRequest newAlbum, UserPrincipal currentUser);
 
-	ResponseEntity<ApiResponse> deleteAlbum(Long id, UserPrincipal currentUser);
+	ResponseEntity<BlogApiResponse> deleteAlbum(Long id, UserPrincipal currentUser);
 
 	PagedResponse<Album> getUserAlbums(String username, int page, int size);
 

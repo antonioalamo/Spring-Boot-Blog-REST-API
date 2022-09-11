@@ -1,6 +1,6 @@
 package com.sopromadze.blogapi.exception;
 
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class UnauthorizedException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	private ApiResponse apiResponse;
+	private BlogApiResponse apiResponse;
 
 	private String message;
 
-	public UnauthorizedException(ApiResponse apiResponse) {
+	public UnauthorizedException(BlogApiResponse apiResponse) {
 		super();
 		this.apiResponse = apiResponse;
 	}
@@ -26,11 +26,11 @@ public class UnauthorizedException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public ApiResponse getApiResponse() {
+	public BlogApiResponse getApiResponse() {
 		return apiResponse;
 	}
 
-	public void setApiResponse(ApiResponse apiResponse) {
+	public void setApiResponse(BlogApiResponse apiResponse) {
 		this.apiResponse = apiResponse;
 	}
 

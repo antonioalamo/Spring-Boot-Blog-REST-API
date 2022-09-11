@@ -3,7 +3,7 @@ package com.sopromadze.blogapi.controller;
 import com.sopromadze.blogapi.model.Album;
 import com.sopromadze.blogapi.model.Post;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.InfoRequest;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.UserIdentityAvailability;
@@ -109,25 +109,25 @@ public class UserController {
 
 	@DeleteMapping("/{username}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteUser(@PathVariable(value = "username") String username,
+	public ResponseEntity<BlogApiResponse> deleteUser(@PathVariable(value = "username") String username,
 			@CurrentUser UserPrincipal currentUser) {
-		ApiResponse apiResponse = userService.deleteUser(username, currentUser);
+		BlogApiResponse apiResponse = userService.deleteUser(username, currentUser);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}
 
 	@PutMapping("/{username}/giveAdmin")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> giveAdmin(@PathVariable(name = "username") String username) {
-		ApiResponse apiResponse = userService.giveAdmin(username);
+	public ResponseEntity<BlogApiResponse> giveAdmin(@PathVariable(name = "username") String username) {
+		BlogApiResponse apiResponse = userService.giveAdmin(username);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}
 
 	@PutMapping("/{username}/takeAdmin")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> takeAdmin(@PathVariable(name = "username") String username) {
-		ApiResponse apiResponse = userService.removeAdmin(username);
+	public ResponseEntity<BlogApiResponse> takeAdmin(@PathVariable(name = "username") String username) {
+		BlogApiResponse apiResponse = userService.removeAdmin(username);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}

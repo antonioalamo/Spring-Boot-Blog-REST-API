@@ -2,7 +2,7 @@ package com.sopromadze.blogapi.controller;
 
 import com.sopromadze.blogapi.exception.UnauthorizedException;
 import com.sopromadze.blogapi.model.Category;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.security.CurrentUser;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -58,7 +58,7 @@ public class CategoryController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteCategory(@PathVariable(name = "id") Long id,
+	public ResponseEntity<BlogApiResponse> deleteCategory(@PathVariable(name = "id") Long id,
 			@CurrentUser UserPrincipal currentUser) throws UnauthorizedException {
 		return categoryService.deleteCategory(id, currentUser);
 	}

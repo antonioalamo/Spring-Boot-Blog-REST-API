@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.service;
 
 import com.sopromadze.blogapi.model.Todo;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.security.UserPrincipal;
 
@@ -19,6 +19,6 @@ public interface TodoService {
 
 	Todo updateTodo(Long id, Todo newTodo, UserPrincipal currentUser);
 
-	ApiResponse deleteTodo(Long id, UserPrincipal currentUser);
+	BlogApiResponse deleteTodo(Long id, UserPrincipal currentUser);
 
 }

@@ -5,13 +5,19 @@ import com.sopromadze.blogapi.exception.BlogapiException;
 import com.sopromadze.blogapi.model.role.Role;
 import com.sopromadze.blogapi.model.role.RoleName;
 import com.sopromadze.blogapi.model.user.User;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.JwtAuthenticationResponse;
 import com.sopromadze.blogapi.payload.LoginRequest;
 import com.sopromadze.blogapi.payload.SignUpRequest;
 import com.sopromadze.blogapi.repository.RoleRepository;
 import com.sopromadze.blogapi.repository.UserRepository;
 import com.sopromadze.blogapi.security.JwtTokenProvider;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
+import lombok.AllArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +39,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
 	private static final String USER_ROLE_NOT_SET = "User role not set";
 
@@ -63,7 +70,9 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<ApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
+	@ApiOperation(value = "Sign Up")
+	@ApiResponses(value = { @ApiResponse(code = 400, message = "Bad Request on Sign Up" ) })
+	public ResponseEntity<BlogApiResponse> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
 		if (Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))) {
 			throw new BlogapiException(HttpStatus.BAD_REQUEST, "Username is already taken");
 		}
@@ -103,6 +112,6 @@ public class AuthController {
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{userId}")
 				.buildAndExpand(result.getId()).toUri();
 
-		return ResponseEntity.created(location).body(new ApiResponse(Boolean.TRUE, "User registered successfully"));
+		return ResponseEntity.created(location).body(new BlogApiResponse(Boolean.TRUE, "User registered successfully"));
 	}
 }

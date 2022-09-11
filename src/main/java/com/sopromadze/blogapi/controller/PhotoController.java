@@ -1,6 +1,6 @@
 package com.sopromadze.blogapi.controller;
 
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PhotoRequest;
 import com.sopromadze.blogapi.payload.PhotoResponse;
@@ -65,8 +65,8 @@ public class PhotoController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deletePhoto(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
-		ApiResponse apiResponse = photoService.deletePhoto(id, currentUser);
+	public ResponseEntity<BlogApiResponse> deletePhoto(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
+		BlogApiResponse apiResponse = photoService.deletePhoto(id, currentUser);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}

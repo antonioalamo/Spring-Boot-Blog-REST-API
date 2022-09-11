@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.controller;
 
 import com.sopromadze.blogapi.model.Tag;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.security.CurrentUser;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -65,8 +65,8 @@ public class TagController {
 
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public ResponseEntity<ApiResponse> deleteTag(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
-		ApiResponse apiResponse = tagService.deleteTag(id, currentUser);
+	public ResponseEntity<BlogApiResponse> deleteTag(@PathVariable(name = "id") Long id, @CurrentUser UserPrincipal currentUser) {
+		BlogApiResponse apiResponse = tagService.deleteTag(id, currentUser);
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.OK);
 	}

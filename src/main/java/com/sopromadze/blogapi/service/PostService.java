@@ -1,7 +1,7 @@
 package com.sopromadze.blogapi.service;
 
 import com.sopromadze.blogapi.model.Post;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PostRequest;
 import com.sopromadze.blogapi.payload.PostResponse;
@@ -19,7 +19,7 @@ public interface PostService {
 
 	Post updatePost(Long id, PostRequest newPostRequest, UserPrincipal currentUser);
 
-	ApiResponse deletePost(Long id, UserPrincipal currentUser);
+	BlogApiResponse deletePost(Long id, UserPrincipal currentUser);
 
 	PostResponse addPost(PostRequest postRequest, UserPrincipal currentUser);
 

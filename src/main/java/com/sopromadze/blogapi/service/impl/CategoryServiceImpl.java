@@ -4,7 +4,7 @@ import com.sopromadze.blogapi.exception.ResourceNotFoundException;
 import com.sopromadze.blogapi.exception.UnauthorizedException;
 import com.sopromadze.blogapi.model.Category;
 import com.sopromadze.blogapi.model.role.RoleName;
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.repository.CategoryRepository;
 import com.sopromadze.blogapi.security.UserPrincipal;
@@ -69,12 +69,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public ResponseEntity<ApiResponse> deleteCategory(Long id, UserPrincipal currentUser) {
+	public ResponseEntity<BlogApiResponse> deleteCategory(Long id, UserPrincipal currentUser) {
 		Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category", "id", id));
 		if (category.getCreatedBy().equals(currentUser.getId()) || currentUser.getAuthorities()
 				.contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 			categoryRepository.deleteById(id);
-			return new ResponseEntity<>(new ApiResponse(Boolean.TRUE, "You successfully deleted category"), HttpStatus.OK);
+			return new ResponseEntity<>(new BlogApiResponse(Boolean.TRUE, "You successfully deleted category"), HttpStatus.OK);
 		}
 		throw new UnauthorizedException("You don't have permission to delete this category");
 	}

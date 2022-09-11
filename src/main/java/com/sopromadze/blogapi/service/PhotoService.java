@@ -1,6 +1,6 @@
 package com.sopromadze.blogapi.service;
 
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.PagedResponse;
 import com.sopromadze.blogapi.payload.PhotoRequest;
 import com.sopromadze.blogapi.payload.PhotoResponse;
@@ -16,7 +16,7 @@ public interface PhotoService {
 
 	PhotoResponse addPhoto(PhotoRequest photoRequest, UserPrincipal currentUser);
 
-	ApiResponse deletePhoto(Long id, UserPrincipal currentUser);
+	BlogApiResponse deletePhoto(Long id, UserPrincipal currentUser);
 
 	PagedResponse<PhotoResponse> getAllPhotosByAlbum(Long albumId, int page, int size);
 

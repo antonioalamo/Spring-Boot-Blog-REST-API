@@ -1,6 +1,6 @@
 package com.sopromadze.blogapi.exception;
 
-import com.sopromadze.blogapi.payload.ApiResponse;
+import com.sopromadze.blogapi.payload.BlogApiResponse;
 import com.sopromadze.blogapi.payload.ExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +21,11 @@ import java.util.Objects;
 @ControllerAdvice
 public class RestControllerExceptionHandler {
 
-	public ResponseEntity<ApiResponse> resolveException(BlogapiException exception) {
+	public ResponseEntity<BlogApiResponse> resolveException(BlogapiException exception) {
 		String message = exception.getMessage();
 		HttpStatus status = exception.getStatus();
 
-		ApiResponse apiResponse = new ApiResponse();
+		BlogApiResponse apiResponse = new BlogApiResponse();
 
 		apiResponse.setSuccess(Boolean.FALSE);
 		apiResponse.setMessage(message);
@@ -36,33 +36,33 @@ public class RestControllerExceptionHandler {
 	@ExceptionHandler(UnauthorizedException.class)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-	public ResponseEntity<ApiResponse> resolveException(UnauthorizedException exception) {
+	public ResponseEntity<BlogApiResponse> resolveException(UnauthorizedException exception) {
 
-		ApiResponse apiResponse = exception.getApiResponse();
+		BlogApiResponse apiResponse = exception.getApiResponse();
 
 		return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
 	}
 
 	@ExceptionHandler(BadRequestException.class)
 	@ResponseBody
-	public ResponseEntity<ApiResponse> resolveException(BadRequestException exception) {
-		ApiResponse apiResponse = exception.getApiResponse();
+	public ResponseEntity<BlogApiResponse> resolveException(BadRequestException exception) {
+		BlogApiResponse apiResponse = exception.getApiResponse();
 
 		return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseBody
-	public ResponseEntity<ApiResponse> resolveException(ResourceNotFoundException exception) {
-		ApiResponse apiResponse = exception.getApiResponse();
+	public ResponseEntity<BlogApiResponse> resolveException(ResourceNotFoundException exception) {
+		BlogApiResponse apiResponse = exception.getApiResponse();
 
 		return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseBody
-	public ResponseEntity<ApiResponse> resolveException(AccessDeniedException exception) {
-		ApiResponse apiResponse = exception.getApiResponse();
+	public ResponseEntity<BlogApiResponse> resolveException(AccessDeniedException exception) {
+		BlogApiResponse apiResponse = exception.getApiResponse();
 
 		return new ResponseEntity< >(apiResponse, HttpStatus.FORBIDDEN);
 	}
