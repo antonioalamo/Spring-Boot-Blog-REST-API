@@ -112,6 +112,22 @@ CREATE TABLE `albums` (
   CONSTRAINT `fk_user_album` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
+CREATE TABLE `book` (
+    `id` bigint(19) unsigned NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `isbn13` VARCHAR(13) NOT NULL,
+    `language_id` bigint(19) NOT NULL,
+    `num_pages` bigint(19) NOT NULL,
+    `publication_date` timestamp NOT NULL,
+    `publisher_id` bigint(19) NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `created_by` bigint(19) unsigned DEFAULT NULL,
+    `updated_by` bigint(19) unsigned DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 CREATE TABLE `photos` (
   `id` bigint(19) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
